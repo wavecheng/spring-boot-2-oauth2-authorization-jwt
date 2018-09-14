@@ -112,6 +112,7 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
 
 			Map<String, Object> info = new LinkedHashMap<String, Object>(accessToken.getAdditionalInformation());
 
+			info.put("expire_time", accessToken.getExpiration());
 			info.put("email", user.getEmail());
 
 			DefaultOAuth2AccessToken customAccessToken = new DefaultOAuth2AccessToken(accessToken);
