@@ -19,4 +19,9 @@ spring:
       naming:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
       ddl-auto: validate
+      
+  data:
+    elasticsearch:
+      cluster-nodes: 127.0.0.1:9300
+      
 check-user-scopes: false
