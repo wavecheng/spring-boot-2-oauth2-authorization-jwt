@@ -99,8 +99,6 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
 	@Bean
 	public JwtAccessTokenConverter jwtAccessTokenConverter() {
 		JwtAccessTokenConverter converter = new CustomTokenEnhancer();
-		converter.setKeyPair(
-				new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "password".toCharArray()).getKeyPair("jwt"));
 		return converter;
 	}
 
