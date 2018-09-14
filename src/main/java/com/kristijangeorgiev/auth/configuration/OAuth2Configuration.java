@@ -63,7 +63,7 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
 	@Bean
 	public OAuth2RequestFactory requestFactory() {
 		CustomOauth2RequestFactory requestFactory = new CustomOauth2RequestFactory(clientDetailsService);
-		requestFactory.setCheckUserScopes(true);
+		requestFactory.setCheckUserScopes(false);
 		return requestFactory;
 	}
 
@@ -75,6 +75,7 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.jdbc(dataSource).passwordEncoder(passwordEncoder);
+	    
 	}
 
 	@Bean

@@ -9,22 +9,9 @@ import javax.persistence.Version;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-/**
- * 
- * <h2>BaseEntity</h2>
- * 
- * @author Kristijan Georgiev
- * 
- *         MappedSuperclass that contains all the necessary fields
- *
- */
-
-@Data
 @MappedSuperclass
-@NoArgsConstructor
+
 public class BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -38,4 +25,29 @@ public class BaseEntity implements Serializable {
 	@UpdateTimestamp
 	protected LocalDateTime updatedOn;
 
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
+	public LocalDateTime getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(LocalDateTime createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public LocalDateTime getUpdatedOn() {
+		return updatedOn;
+	}
+
+	public void setUpdatedOn(LocalDateTime updatedOn) {
+		this.updatedOn = updatedOn;
+	}
+
+	
 }

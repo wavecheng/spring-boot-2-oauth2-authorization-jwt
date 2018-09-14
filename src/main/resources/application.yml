@@ -1,10 +1,10 @@
 server:
-  port: 9999
+  port: 9901
 spring:
   datasource:
     url: jdbc:mysql://${db.host:localhost}:${db.port:3306}/${db.name:oauth2}?useSSL=false
     username: ${db.uid:root}
-    password: ${db.pwd:nemapassword}
+    password: ${db.pwd:citrix}
     driver-class-name: com.mysql.jdbc.Driver
     tomcat:
       test-while-idle: true
@@ -19,4 +19,4 @@ spring:
       naming:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
       ddl-auto: validate
-check-user-scopes: true
+check-user-scopes: false

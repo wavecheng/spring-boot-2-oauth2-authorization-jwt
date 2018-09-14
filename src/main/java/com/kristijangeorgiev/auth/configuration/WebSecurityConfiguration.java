@@ -5,9 +5,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -19,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  *
  */
 @Configuration
+@EnableWebSecurity(debug=true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -37,10 +40,28 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().exceptionHandling()
-				.authenticationEntryPoint(
-						(request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
-				.and().authorizeRequests().antMatchers("/**").authenticated().and().httpBasic();
+		
+//		http.authorizeRequests().antMatchers("/searcher/**").permitAll();
+		
+//		http.csrf().disable().exceptionHandling()				
+//				.and().authorizeRequests()
+//				.antMatchers("/searcher/**").permitAll();
+		 http
+         .csrf().disable()
+         .anonymous().disable()
+         .authorizeRequests()
+         .antMatchers(HttpMethod.OPTIONS).permitAll()
+         .filterSecurityInterceptorOncePerRequest(true)
+         // when restricting access to 'Roles' you must remove the "ROLE_" part role
+         // for "ROLE_USER" use only "USER"
+         //.antMatchers("/api/hello").access("hasAnyRole('USER')")
+         .antMatchers("/searcher/**").authenticated()
+         .antMatchers("/index-configger/**").hasAnyRole("USER", "ADMIN")
+         //.antMatchers("/api/admin").hasRole("ADMIN")
+         // use the full name when specifying authority access
+         //.antMatchers("/api/registerUser").hasAuthority("ROLE_REGISTER")
+         // restricting all access to /api/** to authenticated users
+         .antMatchers("/api/**").authenticated();
 	}
 
 	@Override
